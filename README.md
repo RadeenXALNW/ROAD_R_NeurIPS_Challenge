@@ -21,47 +21,13 @@ For the dataset preparation and packages required to train the models, please se
 
 To download the pretrained weights, please see the end of the [Performance](https://github.com/gurkirt/3D-RetinaNet#performance) section from 3D-RetinaNet for ROAD.  
 
-## Training
+![image](https://github.com/RadeenXALNW/ROAD_R_NeurIPS_Challenge/assets/66905164/d04a55ff-9fb7-4b6a-b307-a1d9d3c1867c)
 
-To train the model, provide the following positional arguments:
- - `DATA_ROOT`: path to a directory in which `road` can be found, containing `road_test_v1.0.json`, `road_trainval_v1.0.json`, and directories `rgb-images` and `videos`.
- - `SAVE_ROOT`: path to a directory in which the experiments (e.g. checkpoints, training logs) will be saved.
- - `MODEL_PATH`: path to the directory containing the weights for the chosen backbone (e.g. `resnet50RCGRU.pth`).
 
-Example train command (to be run from the root of this repository):
 
-```
-DATASET="${HOME}/datasets/"
-EXPDIR="${HOME}/experiments/ROAD-R_Challenge_SSL/"
-KINETICS="${HOME}/experiments/kinetics-pt/"
+## GPU USAGE 
+![image](https://github.com/RadeenXALNW/ROAD_R_NeurIPS_Challenge/assets/66905164/03f9c9bf-6621-4085-81b6-4094943a1447)
 
-mode=train
-max_epochs=150
-milestones="130,145"
-lr=0.0041
-batch_size=4
 
-tnorm=Godel
-req_weight=10
 
-unlabelled_proportion=0.10
-agentness_threshold=0.25
-
-python main.py ${DATASET} ${EXPDIR}/${EXP_ID}/ ${KINETICS} \
-        --MODE=$mode --MAX_EPOCHS=${max_epochs} --MILESTONES=$milestones \
-        --LR=$lr --BATCH_SIZE=${batch_size} \
-        --LOGIC=$tnorm --req_loss_weight=${req_weight} \
-        --unlabelled_proportion=${unlabelled_proportion} --agentness_th=${agentness_th} 
-
-```
-
-## Testing 
-Below is an example command to test a model.
-
-```
-CUDA_VISIBLE_DEVICES=1 python main.py /home/user/datasets /home/user/experiments/  /home/user/kinetics-pt/ --MODE=gen_dets --ARCH=resnet50 --MODEL_TYPE=I3D --DATASET=road --TRAIN_SUBSETS=train_1 --VAL_SUBSETS=test --SEQ_LEN=8 --TEST_SEQ_LEN=8 --BATCH_SIZE=4 --LR=0.0041 --NUM_WORKERS=8 --req_loss_weight=10.0 --LOGIC=Product 
-```
-
-This command will generate a file containing the detected boxes at the following location:
-`/home/user/road/road/log-lo_cache_logic_<LOGIC>_<req_loss_weight>/<experiment-name>/detections-30-08-50_test/log-lo_ROAD_R_predictions_I3D_logic-Product-10.0.txt`.
 
